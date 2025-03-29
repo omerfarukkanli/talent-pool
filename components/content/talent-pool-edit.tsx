@@ -1,28 +1,40 @@
 'use client';
 import React from 'react';
 import { Input } from '../ui/input';
-import { LayoutGrid, MoreHorizontal, Search, SortAscIcon } from 'lucide-react';
+import {
+  AirVent,
+  LayoutGrid,
+  MoreHorizontal,
+  Search,
+  SortAscIcon,
+} from 'lucide-react';
 import { Button } from '../ui/button';
 import { ColumnVisibilityDropdown } from '../column.visibility.dropdown';
 
 const TalentPoolEdit = () => {
   return (
-    <div className='pt-6 flex justify-end gap-4 px-8'>
-      <div className='relative flex-1 max-w-md'>
-        <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-        <Input placeholder='Search' className='pl-8' />
+    <div className='pt-6 px-8'>
+      <div className='flex flex-col lg:flex-row lg:items-center lg:justify-end gap-4'>
+        <div className='relative w-full lg:w-auto lg:max-w-[280px] lg:flex-1'>
+          <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
+          <Input placeholder='Search' className='pl-8 w-full' />
+        </div>
+        <div className='flex flex-wrap items-center gap-2 lg:gap-4 lg:flex-shrink-0'>
+          <Button variant='outline' className='w-auto'>
+            <SortAscIcon className='h-4 w-4 mr-2' /> Sort
+          </Button>
+          <ColumnVisibilityDropdown />
+          <Button variant='outline' className='w-auto'>
+            <LayoutGrid className='h-4 w-4 mr-2' /> Sheet View
+          </Button>
+          <Button variant='outline' className='w-auto md:hidden'>
+            <AirVent className='h-4 w-4 mr-2' /> Ask AI
+          </Button>
+          <Button variant='link' size='icon' className='w-auto'>
+            <MoreHorizontal className='h-4 w-4' />
+          </Button>
+        </div>
       </div>
-      <Button variant='outline'>
-        <SortAscIcon className='h-4 w-4' /> Sort
-      </Button>
-      <ColumnVisibilityDropdown />
-      <Button variant='outline' size='icon'>
-        <LayoutGrid className='h-4 w-4' />
-      </Button>
-
-      <Button variant='link' size='icon'>
-        <MoreHorizontal className='h-4 w-4' />
-      </Button>
     </div>
   );
 };

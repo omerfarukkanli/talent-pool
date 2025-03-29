@@ -36,7 +36,7 @@ export function ColumnVisibilityDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' className='flex items-center gap-2'>
+        <Button variant='outline' className='flex items-center gap-2 w-auto'>
           <Check className='h-4 w-4' />
           <span>Columns</span>
         </Button>
