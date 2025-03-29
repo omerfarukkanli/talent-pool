@@ -1,8 +1,8 @@
 import { Plus } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
 import { Label } from '@/components/ui/label';
-import { SidebarTrigger } from '../ui/sidebar';
+import { SidebarTrigger } from './ui/sidebar';
 
 const TalentPoolHeader = () => {
   return (
