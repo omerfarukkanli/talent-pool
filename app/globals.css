@@ -113,13 +113,16 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  :root {
     --font-family: var(--font-inter);
+    --sidebar-background: 0 0% 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    :root {
-      --sidebar-background: 0 0% 100%;
-    }
+  * {
+    @apply border-border;
   }
 
   body {
