@@ -21,6 +21,7 @@ export const GET_CANDIDATES = gql`
         lastName
         email
         rating
+        profilePhotoUrl
         createdAt
         activeApplication {
           jobListing {

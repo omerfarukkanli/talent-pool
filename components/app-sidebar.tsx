@@ -109,7 +109,7 @@ export function AppSidebar() {
                 <Settings className='w-6 h-6 text-gray-700' />
                 Settings
               </SidebarMenuButton>
-              <div className='flex border-t-2 pt-6 gap-3'>
+              <div className='flex border-t pt-6 gap-3'>
                 <Avatar>
                   <AvatarImage
                     src='https://github.com/shadcn.png'

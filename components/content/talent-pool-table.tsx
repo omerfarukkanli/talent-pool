@@ -31,7 +31,7 @@ const EmptyRow = () => (
 
 const TalentPoolTable = () => {
   const dispatch = useAppDispatch();
-  const { columnVisibility } = useAppSelector((state) => state.ui);
+
   const {
     page,
     applicants,
@@ -282,22 +282,15 @@ const TalentPoolTable = () => {
 
   return (
     <div className='w-full overflow-hidden'>
-      <div className='border-b'>
-        <div>
-          <Table className='w-full overflow-x-auto'>
-            <ApplicantTableHeader
-              selectAll={selectAll}
-              handleSelectAll={handleSelectAll}
-            />
-          </Table>
-        </div>
-      </div>
-
       <div
         ref={tableContainerRef}
-        className='relative w-full h-[600px] overflow-auto'
+        className='relative w-full h-[570px] overflow-auto'
       >
-        <Table className='w-full'>
+        <Table className='w-full overflow-x-scroll'>
+          <ApplicantTableHeader
+            selectAll={selectAll}
+            handleSelectAll={handleSelectAll}
+          />
           <TableBody>
             {applicants.length === 0 && !storeLoading ? (
               <EmptyRow />
@@ -324,11 +317,11 @@ const TalentPoolTable = () => {
         <div ref={observerRef} className='h-1 w-full' aria-hidden='true' />
       </div>
 
-      <div className='py-2 px-4 border-t'>
-        <Button variant='ghost' size='sm' className='text-primary p-0 h-auto'>
+      <div className='py-0 border-t'>
+        <button className='w-60 rounded-none border-t-0 flex justify-center items-center gap-2 px-8 h-10 border text-xs'>
           <Plus className='mr-1 h-4 w-4' />
           Add Talent
-        </Button>
+        </button>
       </div>
     </div>
   );

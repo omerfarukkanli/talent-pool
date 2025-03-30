@@ -1,6 +1,5 @@
 export interface ColumnVisibility {
   name: boolean;
-  email: boolean;
   stage: boolean;
   rating: boolean;
   appliedJob: boolean;
@@ -24,6 +23,7 @@ export interface Applicant {
   lastName: string;
   email: string;
   rating: number;
+  profilePhotoUrl: string;
   createdAt: string;
   activeApplication: {
     jobListing: {

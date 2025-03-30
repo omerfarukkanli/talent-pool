@@ -9,7 +9,6 @@ interface UIState {
 const initialState: UIState = {
   columnVisibility: {
     name: true,
-    email: true,
     stage: true,
     rating: true,
     appliedJob: true,
