@@ -10,7 +10,7 @@ const AppContent = () => {
     <SidebarInset className='flex flex-col'>
       <TalentPoolHeader />
       <TalentPoolEdit />
-      <div className='pt-6 px-4'>
+      <div className='pt-6 md:mx-8'>
         <TalentPoolTable />
       </div>
     </SidebarInset>
