@@ -4,7 +4,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 interface UIState {
   columnVisibility: ColumnVisibility;
   commandBarOpen: boolean;
-  sidebarOpen: boolean;
 }
 
 const initialState: UIState = {
@@ -20,7 +19,6 @@ const initialState: UIState = {
     dateAdded: false,
   },
   commandBarOpen: false,
-  sidebarOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -31,26 +29,19 @@ const uiSlice = createSlice({
       state,
       action: PayloadAction<keyof ColumnVisibility>
     ) => {
+      if (action.payload === 'name') {
+        state.columnVisibility.name = true;
+        return;
+      }
       state.columnVisibility[action.payload] =
         !state.columnVisibility[action.payload];
     },
     setCommandBarOpen: (state, action: PayloadAction<boolean>) => {
       state.commandBarOpen = action.payload;
     },
-    toggleSidebar: (state) => {
-      state.sidebarOpen = !state.sidebarOpen;
-    },
-    setSidebarOpen: (state, action: PayloadAction<boolean>) => {
-      state.sidebarOpen = action.payload;
-    },
   },
 });
 
-export const {
-  toggleColumnVisibility,
-  setCommandBarOpen,
-  toggleSidebar,
-  setSidebarOpen,
-} = uiSlice.actions;
+export const { toggleColumnVisibility, setCommandBarOpen } = uiSlice.actions;
 
 export default uiSlice.reducer;
