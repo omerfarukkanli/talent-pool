@@ -19,7 +19,6 @@ export function ColumnVisibilityDropdown() {
 
   const columnLabels: Record<keyof ColumnVisibility, string> = {
     name: 'Name',
-    email: 'Email',
     stage: 'Stage',
     rating: 'Rating',
     appliedJob: 'Applied Job',

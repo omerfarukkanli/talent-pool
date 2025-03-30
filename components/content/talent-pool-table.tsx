@@ -38,6 +38,8 @@ const TalentPoolTable = () => {
     total,
     loading: storeLoading,
     error: storeError,
+    searchQuery,
+    sort,
   } = useAppSelector((state) => state.talentPool);
 
   const [selectedApplicants, setSelectedApplicants] = useState<string[]>([]);
@@ -52,7 +54,7 @@ const TalentPoolTable = () => {
   const queryVariables = useMemo(
     () => ({
       page: 1,
-      sort: { createdAt: 'desc' },
+      sort: sort,
       pageSize: 20,
       filter: {
         isFavoriteApplicant: false,
@@ -64,9 +66,10 @@ const TalentPoolTable = () => {
             operator: 'contains',
           },
         ],
+        query: searchQuery,
       },
     }),
-    []
+    [searchQuery, sort]
   );
 
   const { fetchMore } = useQuery<ApplicantsResponse>(GET_CANDIDATES, {
@@ -79,6 +82,9 @@ const TalentPoolTable = () => {
             total: data.getCompanyApplicantList.total,
           })
         );
+      } else {
+        hasMoreData.current =
+          data.getCompanyApplicantList.applicants.length >= queryVariables.page;
       }
       dispatch(setError(null));
       isInitialLoad.current = false;
@@ -281,12 +287,12 @@ const TalentPoolTable = () => {
   }
 
   return (
-    <div className='w-full overflow-hidden'>
+    <div className='w-full'>
       <div
         ref={tableContainerRef}
-        className='relative w-full h-[570px] overflow-auto'
+        className='relative h-[570px] shrink-0 overflow-auto'
       >
-        <Table className='w-full overflow-x-scroll'>
+        <Table className='overflow-x-auto'>
           <ApplicantTableHeader
             selectAll={selectAll}
             handleSelectAll={handleSelectAll}

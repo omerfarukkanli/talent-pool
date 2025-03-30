@@ -26,6 +26,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Label } from './ui/label';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@apollo/client';
+import { GET_LOGGED_IN_USER } from '@/lib/graphql/queries';
+import { LoggedInUser } from '@/lib/types';
 
 const selectItemData = [
   {
@@ -63,6 +66,8 @@ const routeItems = [
 
 export function AppSidebar() {
   const router = useRouter();
+
+  const { data } = useQuery<LoggedInUser>(GET_LOGGED_IN_USER);
   return (
     <Sidebar className='!border-0'>
       <div className='flex flex-col justify-between h-3/4'>
@@ -112,16 +117,22 @@ export function AppSidebar() {
               <div className='flex border-t pt-6 gap-3'>
                 <Avatar>
                   <AvatarImage
-                    src='https://github.com/shadcn.png'
+                    width={24}
+                    height={24}
+                    src={data?.loggedInUser.profilePictureUrl}
                     alt='@shadcn'
                     className=''
                   />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback className='border'>{`${data?.loggedInUser.firstName[0]}${data?.loggedInUser.lastName[0]}`}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <Label className='font-[600] text-sm'>Olivia Rhye</Label>
+                  <Label className='font-[600] text-sm'>
+                    {data?.loggedInUser.firstName +
+                      ' ' +
+                      data?.loggedInUser.lastName}
+                  </Label>
                   <Label className='font-normal text-sm'>
-                    oliviarhye@hrpanda.co
+                    {data?.loggedInUser.email}
                   </Label>
                 </div>
                 <div className='relative'>

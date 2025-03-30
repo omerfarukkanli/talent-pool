@@ -17,6 +17,17 @@ export interface ApplicantsResponse {
   };
 }
 
+export type SortOrder = 'asc' | 'desc';
+
+export interface LoggedInUser {
+  loggedInUser: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    profilePictureUrl: string;
+  };
+}
+
 export interface Applicant {
   id: string;
   firstName: string;

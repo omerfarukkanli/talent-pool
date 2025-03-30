@@ -1,4 +1,4 @@
-import { Applicant } from '@/lib/types';
+import { Applicant, SortOrder } from '@/lib/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TalentPoolState {
@@ -8,6 +8,11 @@ interface TalentPoolState {
   total: number;
   loading: boolean;
   error: string | null;
+  searchQuery?: string;
+  sort?: {
+    stage?: SortOrder | null;
+    createdAt?: SortOrder | null;
+  };
 }
 
 const initialState: TalentPoolState = {
@@ -17,6 +22,9 @@ const initialState: TalentPoolState = {
   total: 0,
   loading: false,
   error: null,
+  sort: {
+    createdAt: 'desc',
+  },
 };
 
 const talentPoolSlice = createSlice({
@@ -36,6 +44,11 @@ const talentPoolSlice = createSlice({
     addApplicants(state, action: PayloadAction<Applicant[]>) {
       state.applicants.push(...action.payload);
     },
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+      state.page = 1;
+      state.applicants = [];
+    },
     setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
@@ -48,6 +61,12 @@ const talentPoolSlice = createSlice({
   },
 });
 
-export const { setApplicants, addApplicants, setPage, setLoading, setError } =
-  talentPoolSlice.actions;
+export const {
+  setApplicants,
+  addApplicants,
+  setPage,
+  setLoading,
+  setError,
+  setSearchQuery,
+} = talentPoolSlice.actions;
 export default talentPoolSlice.reducer;
