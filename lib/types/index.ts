@@ -1,18 +1,3 @@
-export interface Candidate {
-  id: string;
-  name: string;
-  email: string;
-  stage: string;
-  rating: number;
-  appliedJob: string;
-  avatar: string | null;
-  resume: boolean;
-  aiFitScore: number;
-  source: string;
-  dateAdded: string;
-  [key: string]: any;
-}
-
 export interface ColumnVisibility {
   name: boolean;
   email: boolean;
@@ -23,4 +8,35 @@ export interface ColumnVisibility {
   aiFitScore: boolean;
   source: boolean;
   dateAdded: boolean;
+}
+
+export interface ApplicantsResponse {
+  getCompanyApplicantList: {
+    pages: number;
+    total: number;
+    applicants: Applicant[];
+  };
+}
+
+export interface Applicant {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  rating: number;
+  createdAt: string;
+  activeApplication: {
+    jobListing: {
+      name: string;
+      color: string;
+    };
+    aiFit: number | null;
+    stage: {
+      name: string;
+      createdAt: string;
+    };
+    resume: {
+      url: string;
+    } | null;
+  };
 }
