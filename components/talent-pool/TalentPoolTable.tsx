@@ -1,12 +1,18 @@
 'use client';
 
+import React, {
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+  useState,
+} from 'react';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useAppSelector, useAppDispatch } from '@/hooks/use-app';
 import { GET_CANDIDATES } from '@/lib/graphql/queries';
 import type { ApplicantsResponse } from '@/lib/types';
 import { useQuery } from '@apollo/client';
 import { Loader2, Plus } from 'lucide-react';
-import { useEffect, useCallback, useRef, useMemo, useState } from 'react';
 import {
   setApplicants,
   addApplicants,
@@ -17,17 +23,18 @@ import {
 import TalentPoolTableHeader from './TalentPoolTableHeader';
 import TalentPoolTableCell from './TalentPoolTableCell';
 
-const EmptyRow = () => (
+const EmptyRow = React.memo(() => (
   <TableRow>
     <TableCell colSpan={8} className='h-24 text-center text-muted-foreground'>
       No applicants found
     </TableCell>
   </TableRow>
-);
+));
+
+EmptyRow.displayName = 'EmptyRow';
 
 const TalentPoolTable = () => {
   const dispatch = useAppDispatch();
-
   const {
     page,
     applicants,
@@ -35,9 +42,8 @@ const TalentPoolTable = () => {
     loading: storeLoading,
     error: storeError,
     sort,
+    filter,
   } = useAppSelector((state) => state.talentPool);
-
-  const { filter } = useAppSelector((state) => state.talentPool);
 
   const [selectedApplicants, setSelectedApplicants] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -50,15 +56,16 @@ const TalentPoolTable = () => {
   const queryVariables = useMemo(
     () => ({
       page: 1,
-      sort: sort,
+      sort,
       pageSize: 20,
-      filter: filter,
+      filter,
     }),
     [sort, filter]
   );
-
   const { fetchMore } = useQuery<ApplicantsResponse>(GET_CANDIDATES, {
     variables: queryVariables,
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'cache-and-network',
     onCompleted: (data) => {
       if (page === 1) {
         dispatch(
@@ -78,8 +85,6 @@ const TalentPoolTable = () => {
       dispatch(setError(error.message));
       isInitialLoad.current = false;
     },
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: 'cache-and-network',
   });
 
   const loadMore = useCallback(async () => {
@@ -126,29 +131,53 @@ const TalentPoolTable = () => {
       dispatch(setLoading(false));
     }
   }, [
-    dispatch,
     storeLoading,
-    page,
-    fetchMore,
     applicants.length,
     total,
+    page,
+    dispatch,
+    fetchMore,
     queryVariables,
   ]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting && !storeLoading && hasMoreData.current) {
-          loadMore();
-        }
-      },
-      {
-        root: tableContainerRef.current,
-        rootMargin: '200px',
-        threshold: 0.1,
-      }
+  const handleSelectAll = useCallback(
+    (checked: boolean) => {
+      setSelectAll(checked);
+      setSelectedApplicants(checked ? applicants.map((a) => a.id) : []);
+    },
+    [applicants]
+  );
+
+  const handleSelectApplicant = useCallback((id: string, checked: boolean) => {
+    setSelectedApplicants((prev) =>
+      checked ? [...prev, id] : prev.filter((appId) => appId !== id)
     );
+  }, []);
+
+  useEffect(() => {
+    if (
+      applicants.length > 0 &&
+      selectedApplicants.length === applicants.length
+    ) {
+      setSelectAll(true);
+    } else {
+      setSelectAll(false);
+    }
+  }, [selectedApplicants, applicants]);
+
+  useEffect(() => {
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && !storeLoading && hasMoreData.current) {
+        loadMore();
+      }
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      root: tableContainerRef.current,
+      rootMargin: '200px',
+      threshold: 0.1,
+    });
 
     const currentObserver = observerRef.current;
     if (currentObserver) observer.observe(currentObserver);
@@ -167,33 +196,6 @@ const TalentPoolTable = () => {
       dispatch(setApplicants({ applicants: [], total: 0 }));
     };
   }, [queryVariables, dispatch]);
-
-  const handleSelectAll = (checked: boolean) => {
-    setSelectAll(checked);
-    if (checked) {
-      setSelectedApplicants(applicants.map((a) => a.id));
-    } else {
-      setSelectedApplicants([]);
-    }
-  };
-
-  const handleSelectApplicant = (id: string, checked: boolean) => {
-    if (checked) {
-      setSelectedApplicants((prev) => [...prev, id]);
-    } else {
-      setSelectedApplicants((prev) => prev.filter((appId) => appId !== id));
-    }
-  };
-  useEffect(() => {
-    if (
-      applicants.length > 0 &&
-      selectedApplicants.length === applicants.length
-    ) {
-      setSelectAll(true);
-    } else {
-      setSelectAll(false);
-    }
-  }, [selectedApplicants, applicants]);
 
   if (storeError) {
     return (
@@ -224,9 +226,9 @@ const TalentPoolTable = () => {
                 ) : (
                   applicants.map((applicant) => (
                     <TalentPoolTableCell
+                      key={applicant.id}
                       id={applicant.id}
                       applicant={applicant}
-                      key={applicant.id}
                       handleSelectApplicant={handleSelectApplicant}
                       selectedApplicants={selectedApplicants}
                     />
