@@ -48,7 +48,7 @@ const TalentPoolTableCell = ({
           <div className='flex gap-3'>
             <UserAvatar
               alt={applicant.firstName + ' ' + applicant.lastName}
-              cn={`${applicant.firstName} ${applicant.lastName}`}
+              cn={`${applicant.firstName[0]} ${applicant.lastName[0]}`}
               src={applicant.profilePhotoUrl}
             />
 
