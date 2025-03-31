@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Talent Pool UI
 
-## Getting Started
+## Technologies Used
 
-First, run the development server:
+- **Next.js** – Modern React-based web framework
+- **TypeScript** – A superset of JavaScript with type safety
+- **Tailwind CSS** – Fast and flexible styling
+- **ShadCN UI** – UI components
+- **OpenAI API** – AI integration
+- **Redux** – State management
+- **GraphQL** – Data management
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ShadCN UI Components Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Component         | Purpose                           |
+| ----------------- | --------------------------------- |
+| **Avatar**        | Display user avatars              |
+| **Badge**         | Used for the "Applied Job" label  |
+| **Button**        | Used throughout the project       |
+| **Checkbox**      | Used to control column visibility |
+| **Dialog**        | Used for the AI input component   |
+| **Dropdown Menu** | Used to list column names         |
+| **Input**         | Used in input fields              |
+| **Label**         | Used to label input fields        |
+| **Progress**      | Used for the "AI Fit" indicator   |
+| **Select**        | Used in the sidebar selection     |
+| **Sheet**         | Used for mobile menu toggling     |
+| **Switch**        | Used to toggle column visibility  |
+| **Table**         | Used for data tables              |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Project Overview
 
-To learn more about Next.js, take a look at the following resources:
+This project utilizes **GraphQL** for data access and **Redux** for state management. **Query** and **sorting** operations are handled via Redux.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To optimize performance, **useMemo** and **useCallback** hooks were used to minimize unnecessary re-renders. **Infinite Scroll** was implemented to dynamically load content based on table position.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### OpenAI API Integration
 
-## Deploy on Vercel
+**OpenAI API** was integrated for AI functionality. Currently, the prompt is optimized for name queries but can be expanded in the future.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Additional Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Search by name** functionality was added.
+- **Column visibility** is managed through Redux.
+- **Sorting functionality** was implemented for most applicable fields.
+
+This project is designed to create an AI-powered talent pool management system. Future versions will include additional features and improvements.
