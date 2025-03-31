@@ -99,7 +99,7 @@ const ApplicantTableCell = ({
       )}
       {columnVisibility.rating && (
         <TableCell className={columnWidths.rating}>
-          <StarRating rating={applicant.rating || 3} />
+          <StarRating rating={applicant.rating} />
         </TableCell>
       )}
       {columnVisibility.dateAdded && (

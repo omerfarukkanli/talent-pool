@@ -34,9 +34,10 @@ const TalentPoolTable = () => {
     total,
     loading: storeLoading,
     error: storeError,
-    searchQuery,
     sort,
   } = useAppSelector((state) => state.talentPool);
+
+  const { filter } = useAppSelector((state) => state.talentPool);
 
   const [selectedApplicants, setSelectedApplicants] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -45,28 +46,17 @@ const TalentPoolTable = () => {
   const observerRef = useRef<HTMLDivElement>(null);
   const hasMoreData = useRef(true);
   const isInitialLoad = useRef(true);
-
+  console.log(filter);
   const queryVariables = useMemo(
     () => ({
       page: 1,
       sort: sort,
       pageSize: 20,
-      filter: {
-        isFavoriteApplicant: false,
-        filterParameters: [
-          {
-            filterVariable: '',
-            logicalOperator: 'AND',
-            name: 'fullName',
-            operator: 'contains',
-          },
-        ],
-        query: searchQuery,
-      },
+      filter: filter,
     }),
-    [searchQuery, sort]
+    [sort, filter]
   );
-  console.log(queryVariables);
+
   const { fetchMore } = useQuery<ApplicantsResponse>(GET_CANDIDATES, {
     variables: queryVariables,
     onCompleted: (data) => {

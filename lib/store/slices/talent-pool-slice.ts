@@ -8,8 +8,21 @@ interface TalentPoolState {
   total: number;
   loading: boolean;
   error: string | null;
-  searchQuery?: string;
   sort: SortType | null;
+  filter?: FilterType;
+}
+
+export interface FilterType {
+  query?: string | null;
+  isFavoriteApplicant?: boolean;
+  filterParameters:
+    | {
+        operator?: string | null;
+        filterVariable?: string | null;
+        logicalOperator?: string | null;
+        name?: string | null;
+      }[]
+    | null;
 }
 
 export interface SortType {
@@ -47,8 +60,24 @@ const talentPoolSlice = createSlice({
     addApplicants(state, action: PayloadAction<Applicant[]>) {
       state.applicants.push(...action.payload);
     },
-    setSearchQuery(state, action: PayloadAction<string>) {
-      state.searchQuery = action.payload;
+    setFilter(state, action: PayloadAction<FilterType>) {
+      if (!state.filter) {
+        state.filter = {
+          query: action.payload.query,
+          filterParameters: action.payload.filterParameters ?? [],
+        };
+      } else {
+        state.filter.query = action.payload.query;
+        state.filter.filterParameters = [
+          ...(state.filter.filterParameters ?? []),
+          ...(action.payload.filterParameters ?? []),
+        ];
+      }
+      state.page = 1;
+      state.applicants = [];
+    },
+    removeFilter(state) {
+      state.filter = undefined; // Tüm filtreleri temizle
       state.page = 1;
       state.applicants = [];
     },
@@ -63,8 +92,7 @@ const talentPoolSlice = createSlice({
       state.page = 1;
       state.applicants = [];
       if (order === null) {
-        if (!state.sort) return; // Zaten sıralama yoksa çık
-
+        if (!state.sort) return;
         const updatedSort = { ...state.sort };
         delete updatedSort[field];
         state.sort = Object.keys(updatedSort).length > 0 ? updatedSort : null;
@@ -95,7 +123,8 @@ export const {
   setPage,
   setLoading,
   setError,
-  setSearchQuery,
   setSortQuery,
+  setFilter,
+  removeFilter,
 } = talentPoolSlice.actions;
 export default talentPoolSlice.reducer;

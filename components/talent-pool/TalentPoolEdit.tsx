@@ -10,7 +10,7 @@ import {
 import { Button } from '../ui/button';
 import { ColumnVisibilityDropdown } from '../ColumnVisibiliyDropdown';
 import { useAppDispatch } from '@/hooks/use-app';
-import { setSearchQuery } from '@/lib/store/slices/talent-pool-slice';
+import { removeFilter, setFilter } from '@/lib/store/slices/talent-pool-slice';
 import { useDebounce } from '@/hooks/use-debounce';
 import AIButton from '../AIButton';
 
@@ -20,7 +20,22 @@ const TalentPoolEdit = () => {
   const debouncedSearch = useDebounce(localSearch, 300);
 
   useEffect(() => {
-    dispatch(setSearchQuery(debouncedSearch));
+    dispatch(
+      setFilter({
+        isFavoriteApplicant: false,
+        filterParameters: [
+          {
+            filterVariable: '',
+            logicalOperator: 'AND',
+            name: 'fullName',
+            operator: 'contains',
+          },
+        ],
+        query: debouncedSearch,
+      })
+    );
+
+    if (debouncedSearch.length < 1) dispatch(removeFilter());
   }, [debouncedSearch, dispatch]);
 
   return (
