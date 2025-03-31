@@ -17,9 +17,9 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import ApplicantCard from './applicant-card';
-import ApplicantTableHeader from '../talent-pool/applicant-table-header';
-import ApplicantTableCell from '../talent-pool/applicant-table-cell';
+import ApplicantCard from '../content/applicant-card';
+import ApplicantTableHeader from './applicant-table-header';
+import ApplicantTableCell from './applicant-table-cell';
 
 const EmptyRow = () => (
   <TableRow>
@@ -71,7 +71,7 @@ const TalentPoolTable = () => {
     }),
     [searchQuery, sort]
   );
-
+  console.log(queryVariables);
   const { fetchMore } = useQuery<ApplicantsResponse>(GET_CANDIDATES, {
     variables: queryVariables,
     onCompleted: (data) => {

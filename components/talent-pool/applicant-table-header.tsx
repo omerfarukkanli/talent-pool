@@ -1,9 +1,12 @@
+'use client';
 import React from 'react';
 import { TableHead, TableRow } from '@/components/ui/table';
-import { ChevronDown } from 'lucide-react';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import { columnWidths } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useAppSelector } from '@/hooks/use-app';
+import { useAppDispatch, useAppSelector } from '@/hooks/use-app';
+import { setSortQuery } from '@/lib/store/slices/talent-pool-slice';
+import { HeaderFiledTpye, SortOrder } from '@/lib/types';
 
 interface ApplicantTableHeaderProps {
   selectAll: boolean;
@@ -15,6 +18,22 @@ const ApplicantTableHeader = ({
   handleSelectAll,
 }: ApplicantTableHeaderProps) => {
   const { columnVisibility } = useAppSelector((state) => state.ui);
+  const dispatch = useAppDispatch();
+  const { sort } = useAppSelector((state) => state.talentPool);
+
+  const handleToggleSort = (field: HeaderFiledTpye) => {
+    const currentSort = sort?.[field] ?? null;
+    let newOrder: SortOrder | null = null;
+    if (currentSort === null) {
+      newOrder = 'asc';
+    } else if (currentSort === 'asc') {
+      newOrder = 'desc';
+    } else {
+      newOrder = null;
+    }
+
+    dispatch(setSortQuery({ field, order: newOrder }));
+  };
 
   return (
     <TableRow>
@@ -30,38 +49,75 @@ const ApplicantTableHeader = ({
         Email
       </TableHead>
       {columnVisibility.stage && (
-        <TableHead className={`text-xs text-gray-600 ${columnWidths.stage}`}>
+        <TableHead
+          className={`text-xs text-gray-600 ${columnWidths.stage}`}
+          onClick={() => handleToggleSort('stage')}
+        >
           <div className='flex justify-between'>
             Stage
-            <ChevronDown className='ml-1 inline-block w-4 h-4' />
+            {sort?.stage &&
+              (sort.stage === 'asc' ? (
+                <ArrowDown className='inline-block w-4 h-4' />
+              ) : (
+                <ArrowUp className='inline-block w-4 h-4' />
+              ))}
           </div>
         </TableHead>
       )}
       {columnVisibility.aiFitScore && (
         <TableHead
           className={`text-xs text-gray-600  ${columnWidths.aiFitScore}`}
+          onClick={() => handleToggleSort('aiFit')}
         >
-          AI Fit Score
+          <div className='flex justify-between'>
+            AI Fit Score
+            {sort?.aiFit &&
+              (sort.aiFit === 'asc' ? (
+                <ArrowDown className='inline-block w-4 h-4' />
+              ) : (
+                <ArrowUp className='inline-block w-4 h-4' />
+              ))}
+          </div>
         </TableHead>
       )}
       {columnVisibility.source && (
-        <TableHead className={`text-xs text-gray-600  ${columnWidths.source}`}>
+        <TableHead
+          className={`text-xs text-gray-600  ${columnWidths.source}`}
+          onClick={() => handleToggleSort('sourceType')}
+        >
           Source
         </TableHead>
       )}
       {columnVisibility.rating && (
-        <TableHead className={`text-xs text-gray-600  ${columnWidths.rating}`}>
+        <TableHead
+          className={`text-xs text-gray-600  ${columnWidths.rating}`}
+          onClick={() => handleToggleSort('avgRating')}
+        >
           <div className='flex justify-between'>
             Rating
-            <ChevronDown className='ml-1 inline-block w-4 h-4' />
+            {sort?.avgRating &&
+              (sort.avgRating === 'asc' ? (
+                <ArrowDown className='inline-block w-4 h-4' />
+              ) : (
+                <ArrowUp className='inline-block w-4 h-4' />
+              ))}
           </div>
         </TableHead>
       )}
       {columnVisibility.dateAdded && (
         <TableHead
           className={`text-xs text-gray-600  ${columnWidths.dateAdded}`}
+          onClick={() => handleToggleSort('createdAt')}
         >
-          Date Added
+          <div className='flex justify-between'>
+            Date Added
+            {sort?.createdAt &&
+              (sort.createdAt === 'asc' ? (
+                <ArrowDown className='inline-block w-4 h-4' />
+              ) : (
+                <ArrowUp className='inline-block w-4 h-4' />
+              ))}
+          </div>
         </TableHead>
       )}
       {columnVisibility.appliedJob && (

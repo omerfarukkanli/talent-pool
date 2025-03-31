@@ -9,10 +9,15 @@ interface TalentPoolState {
   loading: boolean;
   error: string | null;
   searchQuery?: string;
-  sort?: {
-    stage?: SortOrder | null;
-    createdAt?: SortOrder | null;
-  };
+  sort: SortType | null;
+}
+
+export interface SortType {
+  stage?: SortOrder;
+  createdAt?: SortOrder;
+  sourceType?: SortOrder;
+  avgRating?: SortOrder;
+  aiFit?: SortOrder;
 }
 
 const initialState: TalentPoolState = {
@@ -22,9 +27,7 @@ const initialState: TalentPoolState = {
   total: 0,
   loading: false,
   error: null,
-  sort: {
-    createdAt: 'desc',
-  },
+  sort: null,
 };
 
 const talentPoolSlice = createSlice({
@@ -49,6 +52,31 @@ const talentPoolSlice = createSlice({
       state.page = 1;
       state.applicants = [];
     },
+    setSortQuery(
+      state,
+      action: PayloadAction<{
+        field: keyof SortType;
+        order: SortOrder | null;
+      }>
+    ) {
+      const { field, order } = action.payload;
+      state.page = 1;
+      state.applicants = [];
+      if (order === null) {
+        if (!state.sort) return; // Zaten sıralama yoksa çık
+
+        const updatedSort = { ...state.sort };
+        delete updatedSort[field];
+        state.sort = Object.keys(updatedSort).length > 0 ? updatedSort : null;
+        return;
+      }
+
+      state.sort = {
+        ...state.sort,
+        [field]: order,
+      };
+    },
+
     setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
@@ -68,5 +96,6 @@ export const {
   setLoading,
   setError,
   setSearchQuery,
+  setSortQuery,
 } = talentPoolSlice.actions;
 export default talentPoolSlice.reducer;

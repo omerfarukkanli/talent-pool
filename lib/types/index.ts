@@ -19,6 +19,13 @@ export interface ApplicantsResponse {
 
 export type SortOrder = 'asc' | 'desc';
 
+export type HeaderFiledTpye =
+  | 'stage'
+  | 'createdAt'
+  | 'sourceType'
+  | 'avgRating'
+  | 'aiFit';
+
 export interface LoggedInUser {
   loggedInUser: {
     email: string;
