@@ -1,17 +1,18 @@
+'use client';
 import { Plus } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Label } from '@/components/ui/label';
-import { SidebarTrigger } from './ui/sidebar';
 import { useAppSelector } from '@/hooks/use-app';
+import MobileToggle from './MobileToggle';
 
 const TalentPoolHeader = () => {
   const { total } = useAppSelector((state) => state.talentPool);
 
   return (
-    <header className='flex w-auto md:pt-8 md:mx-8 pt-4 px-4 border-b-2 pb-4'>
-      <SidebarTrigger className='-ml-1  md:hidden'></SidebarTrigger>
+    <header className='md:pt-8 md:mx-8 pt-4 px-4 border-b h- pb-4'>
       <div className='flex w-full justify-between md:flex-row flex-col'>
+        <MobileToggle />
         <div className='flex  flex-col items-center md:items-start'>
           <div className='flex gap-1'>
             <h1 className='font-semibold text-3xl'>Talent Pool</h1>

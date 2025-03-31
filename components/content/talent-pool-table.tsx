@@ -3,7 +3,7 @@
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useAppSelector, useAppDispatch } from '@/hooks/use-app';
 import { GET_CANDIDATES } from '@/lib/graphql/queries';
-import { ApplicantsResponse } from '@/lib/types';
+import type { ApplicantsResponse } from '@/lib/types';
 import { useQuery } from '@apollo/client';
 import { Loader2, Plus } from 'lucide-react';
 import { useEffect, useCallback, useRef, useMemo, useState } from 'react';
@@ -18,8 +18,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import ApplicantCard from './applicant-card';
-import ApplicantTableCell from './applicant-table-cell';
 import ApplicantTableHeader from './applicant-table-header';
+import ApplicantTableCell from './applicant-table-cell';
 
 const EmptyRow = () => (
   <TableRow>
@@ -233,8 +233,6 @@ const TalentPoolTable = () => {
     );
   }
 
-  // Define column widths
-
   if (isMobile) {
     return (
       <div className='w-full border rounded-md overflow-hidden'>
@@ -290,29 +288,34 @@ const TalentPoolTable = () => {
     <div className='w-full'>
       <div
         ref={tableContainerRef}
-        className='relative h-[570px] shrink-0 overflow-auto'
+        style={{ maxHeight: 'calc(100vh - 300px)', minHeight: '400px' }}
+        className='overflow-auto'
       >
-        <Table className='overflow-x-auto'>
-          <ApplicantTableHeader
-            selectAll={selectAll}
-            handleSelectAll={handleSelectAll}
-          />
-          <TableBody>
-            {applicants.length === 0 && !storeLoading ? (
-              <EmptyRow />
-            ) : (
-              applicants.map((applicant) => (
-                <ApplicantTableCell
-                  id={applicant.id}
-                  applicant={applicant}
-                  key={applicant.id}
-                  handleSelectApplicant={handleSelectApplicant}
-                  selectedApplicants={selectedApplicants}
-                />
-              ))
-            )}
-          </TableBody>
-        </Table>
+        <div className='inline-block min-w-full'>
+          <div className='overflow-hidden'>
+            <Table className='min-w-full'>
+              <ApplicantTableHeader
+                selectAll={selectAll}
+                handleSelectAll={handleSelectAll}
+              />
+              <TableBody>
+                {applicants.length === 0 && !storeLoading ? (
+                  <EmptyRow />
+                ) : (
+                  applicants.map((applicant) => (
+                    <ApplicantTableCell
+                      id={applicant.id}
+                      applicant={applicant}
+                      key={applicant.id}
+                      handleSelectApplicant={handleSelectApplicant}
+                      selectedApplicants={selectedApplicants}
+                    />
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
 
         {storeLoading && !isInitialLoad.current && (
           <div className='flex justify-center py-4'>
