@@ -50,4 +50,17 @@ To optimize performance, **useMemo** and **useCallback** hooks were used to mini
 
 This project is designed to create an AI-powered talent pool management system. Future versions will include additional features and improvements.
 
-url: talent-pool-alpha.vercel.app
+---
+
+## Environment Variables
+
+Ensure you set the following environment variables in your `.env` file:
+
+```
+NEXT_PUBLIC_GRAPHQL_ENDPOINT=https://staging-api.hrpanda.co/graphql
+NEXT_PUBLIC_AUTH_EMAIL=admin20@hireg.com
+NEXT_PUBLIC_AUTH_PASSWORD=123123
+NEXT_PUBLIC_OPENAI_API_KEY=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
+```
+
+> **Note:** Keep sensitive credentials secure and avoid exposing them in public repositories.
