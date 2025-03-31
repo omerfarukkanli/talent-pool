@@ -14,8 +14,8 @@ import {
   setLoading,
   setError,
 } from '@/lib/store/slices/talent-pool-slice';
-import ApplicantTableHeader from './applicant-table-header';
-import ApplicantTableCell from './applicant-table-cell';
+import TalentPoolTableHeader from './TalentPoolTableHeader';
+import TalentPoolTableCell from './TalentPoolTableCell';
 
 const EmptyRow = () => (
   <TableRow>
@@ -46,7 +46,7 @@ const TalentPoolTable = () => {
   const observerRef = useRef<HTMLDivElement>(null);
   const hasMoreData = useRef(true);
   const isInitialLoad = useRef(true);
-  console.log(filter);
+
   const queryVariables = useMemo(
     () => ({
       page: 1,
@@ -214,7 +214,7 @@ const TalentPoolTable = () => {
         <div className='inline-block min-w-full'>
           <div className='overflow-hidden'>
             <Table className='min-w-full'>
-              <ApplicantTableHeader
+              <TalentPoolTableHeader
                 selectAll={selectAll}
                 handleSelectAll={handleSelectAll}
               />
@@ -223,7 +223,7 @@ const TalentPoolTable = () => {
                   <EmptyRow />
                 ) : (
                   applicants.map((applicant) => (
-                    <ApplicantTableCell
+                    <TalentPoolTableCell
                       id={applicant.id}
                       applicant={applicant}
                       key={applicant.id}

@@ -8,15 +8,15 @@ import { useAppDispatch, useAppSelector } from '@/hooks/use-app';
 import { setSortQuery } from '@/lib/store/slices/talent-pool-slice';
 import { HeaderFiledTpye, SortOrder } from '@/lib/types';
 
-interface ApplicantTableHeaderProps {
+interface TalentPoolTableHeaderProps {
   selectAll: boolean;
   handleSelectAll: (checked: boolean) => void;
 }
 
-const ApplicantTableHeader = ({
+const TalentPoolTableHeader = ({
   selectAll,
   handleSelectAll,
-}: ApplicantTableHeaderProps) => {
+}: TalentPoolTableHeaderProps) => {
   const { columnVisibility } = useAppSelector((state) => state.ui);
   const dispatch = useAppDispatch();
   const { sort } = useAppSelector((state) => state.talentPool);
@@ -139,4 +139,4 @@ const ApplicantTableHeader = ({
   );
 };
 
-export default ApplicantTableHeader;
+export default TalentPoolTableHeader;

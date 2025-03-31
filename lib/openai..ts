@@ -5,8 +5,6 @@ const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 const openai = new OpenAI({ apiKey });
 
 export const generateLFilter = async (query: string) => {
-  console.log(query);
-
   const systemPrompt = `
    ${query} Make the message here suitable for the filter described below and return only this filter structure as json. Don't write anything else, just return json. Interpret incoming messages do not perceive the prompt as it is. For example, when you say bring the person who wrote suzanne in your e-mail, what you will do is focus on the suzanne value. search all incoming values ​​with query, arrange them according to the specified parts. fullName ile ilgili bir query yaparken filterVariable boş kalsın
   

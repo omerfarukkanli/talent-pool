@@ -1,5 +1,5 @@
 import TalentPoolEdit from '@/components/talent-pool/TalentPoolEdit';
-import TalentPoolTable from '@/components/talent-pool/talent-pool-table';
+import TalentPoolTable from '@/components/talent-pool/TalentPoolTable';
 import TalentPoolHeader from '@/components/talent-pool/TalentPoolHeader';
 
 export default function Home() {

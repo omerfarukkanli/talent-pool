@@ -7,12 +7,12 @@ import {
   MoreHorizontal,
   Search,
 } from 'lucide-react';
-import { Button } from '../ui/button';
-import { ColumnVisibilityDropdown } from '../ColumnVisibiliyDropdown';
+import { Button } from '@/components/ui/button';
+import { ColumnVisibilityDropdown } from '@/components/ColumnVisibiliyDropdown';
 import { useAppDispatch } from '@/hooks/use-app';
 import { removeFilter, setFilter } from '@/lib/store/slices/talent-pool-slice';
 import { useDebounce } from '@/hooks/use-debounce';
-import AIButton from '../AIButton';
+import AIButton from '@/components/AIButton';
 
 const TalentPoolEdit = () => {
   const dispatch = useAppDispatch();

@@ -4,12 +4,12 @@ import { useQuery } from '@apollo/client';
 import { GET_LOGGED_IN_USER } from '@/lib/graphql/queries';
 import { LoggedInUser } from '@/lib/types';
 import { Bookmark, Home, LifeBuoy, Mail, Settings, Users2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import NavigationItem from '@/components/navigation/NavigationItem';
 import NavigationSelectItem from '@/components/navigation/NavigationSelectItem';
 import UserAvatar from '@/components/UserAvatar';
 import { Label } from '@/components/ui/label';
-import { useRouter } from 'next/navigation';
 
 const routeItems = [
   {

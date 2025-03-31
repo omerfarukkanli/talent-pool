@@ -1,30 +1,33 @@
 import React from 'react';
-import { TableCell, TableRow } from '../ui/table';
-import { Checkbox } from '../ui/checkbox';
-import { Applicant } from '@/lib/types';
-import { ChevronDown, MoreVertical } from 'lucide-react';
-import StarRating from '@/components/raing-star';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { columnWidths } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { useAppSelector } from '@/hooks/use-app';
-import { Progress } from '../ui/progress';
 import { format } from 'date-fns';
-import { PDFPreview } from '../cs-preview';
-interface ApplicantTableCellProps {
+import { ChevronDown, MoreVertical } from 'lucide-react';
+
+import { Applicant } from '@/lib/types';
+import { columnWidths } from '@/lib/utils';
+import { useAppSelector } from '@/hooks/use-app';
+
+import { TableCell, TableRow } from '@/components/ui/table';
+import { Checkbox } from '@/components/ui/checkbox';
+import StarRating from '@/components/StarRating';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { PDFPreview } from '@/components/PdfPreview';
+import UserAvatar from '@/components/UserAvatar';
+
+interface TalentPoolTableCellProps {
   id: string;
   applicant: Applicant;
   selectedApplicants: string[];
   handleSelectApplicant: (id: string, checked: boolean) => void;
 }
 
-const ApplicantTableCell = ({
+const TalentPoolTableCell = ({
   id,
   applicant,
   selectedApplicants,
   handleSelectApplicant,
-}: ApplicantTableCellProps) => {
+}: TalentPoolTableCellProps) => {
   const { columnVisibility } = useAppSelector((state) => state.ui);
 
   const formattedSourceDate = format(applicant.createdAt, 'dd MMMM yyyy');
@@ -43,16 +46,11 @@ const ApplicantTableCell = ({
       {columnVisibility.name && (
         <TableCell className={`${columnWidths.name} 'text-gray-700 text-xs`}>
           <div className='flex gap-3'>
-            <Avatar>
-              <AvatarImage
-                width={24}
-                height={24}
-                src={applicant.profilePhotoUrl}
-                alt='@shadcn'
-                className=''
-              />
-              <AvatarFallback className='border'>{`${applicant.firstName[0]}${applicant.lastName[0]}`}</AvatarFallback>
-            </Avatar>
+            <UserAvatar
+              alt={applicant.firstName + ' ' + applicant.lastName}
+              cn={`${applicant.firstName} ${applicant.lastName}`}
+              src={applicant.profilePhotoUrl}
+            />
 
             <div className='flex items-center gap-2'>
               <span>{`${applicant.firstName} ${applicant.lastName}`}</span>
@@ -138,4 +136,4 @@ const ApplicantTableCell = ({
   );
 };
 
-export default ApplicantTableCell;
+export default TalentPoolTableCell;

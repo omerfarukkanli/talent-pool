@@ -1,10 +1,15 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { AirVent } from 'lucide-react';
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
-import { Label } from './ui/label';
-import { Input } from './ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 import { removeFilter, setFilter } from '@/lib/store/slices/talent-pool-slice';
 import { useAppDispatch } from '@/hooks/use-app';
