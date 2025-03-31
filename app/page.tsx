@@ -1,11 +1,11 @@
-import TalentPoolEdit from '@/components/content/talent-pool-edit';
+import TalentPoolEdit from '@/components/talent-pool/TalentPoolEdit';
 import TalentPoolTable from '@/components/content/talent-pool-table';
-import TalentPoolHeader from '@/components/talent-pool-header';
+import TalentPoolHeader from '@/components/talent-pool/TalentPoolHeader';
 
 export default function Home() {
   return (
     <div>
-      <div className='flex-shrink-0'>
+      <div>
         <TalentPoolHeader />
         <TalentPoolEdit />
       </div>

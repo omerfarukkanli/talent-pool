@@ -1,10 +1,10 @@
 'use client';
 import { Plus } from 'lucide-react';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { useAppSelector } from '@/hooks/use-app';
-import MobileToggle from './MobileToggle';
+import MobileToggle from '@/components/MobileToggle';
 
 const TalentPoolHeader = () => {
   const { total } = useAppSelector((state) => state.talentPool);

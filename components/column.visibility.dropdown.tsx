@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { Columns } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -35,8 +35,8 @@ export function ColumnVisibilityDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' className='flex items-center gap-2 w-auto'>
-          <Check className='h-4 w-4' />
+        <Button variant='outline' className='lg:flex items-center gap-2 hidden'>
+          <Columns className='h-4 w-4' />
           <span>Columns</span>
         </Button>
       </DropdownMenuTrigger>
