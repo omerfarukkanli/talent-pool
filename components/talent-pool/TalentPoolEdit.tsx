@@ -9,7 +9,7 @@ import {
   Search,
 } from 'lucide-react';
 import { Button } from '../ui/button';
-import { ColumnVisibilityDropdown } from '../column.visibility.dropdown';
+import { ColumnVisibilityDropdown } from '../ColumnVisibiliyDropdown';
 import { useAppDispatch } from '@/hooks/use-app';
 import { setSearchQuery } from '@/lib/store/slices/talent-pool-slice';
 import { useDebounce } from '@/hooks/use-debounce';

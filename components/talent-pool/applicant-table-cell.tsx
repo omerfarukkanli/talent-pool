@@ -2,14 +2,16 @@ import React from 'react';
 import { TableCell, TableRow } from '../ui/table';
 import { Checkbox } from '../ui/checkbox';
 import { Applicant } from '@/lib/types';
-import { ChevronDown, FileText, MoreVertical } from 'lucide-react';
-import StarRating from './raing-star';
+import { ChevronDown, MoreVertical } from 'lucide-react';
+import StarRating from '@/components/raing-star';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { columnWidths } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useAppSelector } from '@/hooks/use-app';
-
+import { Progress } from '../ui/progress';
+import { format } from 'date-fns';
+import { PDFPreview } from '../cs-preview';
 interface ApplicantTableCellProps {
   id: string;
   applicant: Applicant;
@@ -24,6 +26,10 @@ const ApplicantTableCell = ({
   handleSelectApplicant,
 }: ApplicantTableCellProps) => {
   const { columnVisibility } = useAppSelector((state) => state.ui);
+
+  const formattedSourceDate = format(applicant.createdAt, 'dd MMMM yyyy');
+  const formattedDateAdded = format(applicant.createdAt, 'dd MMM yyyy');
+
   return (
     <TableRow key={id} className='hover:bg-muted/5'>
       <TableCell className={columnWidths.checkbox}>
@@ -68,9 +74,39 @@ const ApplicantTableCell = ({
           </div>
         </TableCell>
       )}
+      {columnVisibility.aiFitScore && (
+        <TableCell className={columnWidths.aiFitScore}>
+          {!applicant.activeApplication.aiFit ? (
+            <div className='text-center'>-</div>
+          ) : (
+            <div className='flex items-center justify-center gap-1'>
+              <Progress
+                value={applicant.activeApplication.aiFit}
+                className='[&>div]:bg-green-500 bg-gray-200'
+              />
+              {'%' + applicant.activeApplication.aiFit}
+            </div>
+          )}
+        </TableCell>
+      )}
+      {columnVisibility.source && (
+        <TableCell className={`${columnWidths.source}  text-gray-700 text-xs`}>
+          <div className='flex items-center flex-col'>
+            <div> {applicant.sourceType.toLowerCase()}</div>
+            <div>{formattedSourceDate}</div>
+          </div>
+        </TableCell>
+      )}
       {columnVisibility.rating && (
         <TableCell className={columnWidths.rating}>
           <StarRating rating={applicant.rating || 3} />
+        </TableCell>
+      )}
+      {columnVisibility.dateAdded && (
+        <TableCell
+          className={`${columnWidths.dateAdded}  text-gray-700 text-xs`}
+        >
+          <div className='text-center'>{formattedDateAdded}</div>
         </TableCell>
       )}
       {columnVisibility.appliedJob && (
@@ -87,9 +123,7 @@ const ApplicantTableCell = ({
           className={`${columnWidths.resume} 'text-gray-700 text-xs' text-center`}
         >
           {applicant.activeApplication.resume ? (
-            <div className='flex justify-center'>
-              <FileText className='h-5 w-5 text-red-500' />
-            </div>
+            <PDFPreview pdfUrl={applicant.activeApplication.resume.url} />
           ) : (
             <div className='flex justify-center'>-</div>
           )}

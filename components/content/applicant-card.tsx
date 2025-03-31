@@ -4,7 +4,7 @@ import { Checkbox } from '../ui/checkbox';
 import { Button } from '../ui/button';
 import { FileText, MoreVertical } from 'lucide-react';
 import { Badge } from '../ui/badge';
-import StarRating from './raing-star';
+import StarRating from '@/components/raing-star';
 
 interface ApplicantCardProps {
   applicant: Applicant;

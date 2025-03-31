@@ -3,8 +3,6 @@ import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Switch } from '@/components/ui/switch';
@@ -20,12 +18,12 @@ export function ColumnVisibilityDropdown() {
   const columnLabels: Record<keyof ColumnVisibility, string> = {
     name: 'Name',
     stage: 'Stage',
-    rating: 'Rating',
-    appliedJob: 'Applied Job',
-    resume: 'Resume',
     aiFitScore: 'AI Fit Score',
     source: 'Source',
+    rating: 'Rating',
     dateAdded: 'Date Added',
+    appliedJob: 'Applied Job',
+    resume: 'Resume',
   };
 
   const handleToggleColumn = (column: keyof ColumnVisibility) => {
@@ -41,8 +39,6 @@ export function ColumnVisibilityDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56'>
-        <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         {(Object.keys(columnVisibility) as Array<keyof ColumnVisibility>).map(
           (column) => (
             <div
@@ -52,6 +48,7 @@ export function ColumnVisibilityDropdown() {
               <span className='text-sm'>{columnLabels[column]}</span>
               <Switch
                 checked={columnVisibility[column]}
+                disabled={column === 'name'}
                 onCheckedChange={() => handleToggleColumn(column)}
               />
             </div>

@@ -6,12 +6,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const columnWidths = {
-  checkbox: 'w-[40px]',
-  name: 'w-[200px] border-r',
-  email: 'w-[156px]  border-r overflow-hidden',
-  stage: 'w-[180px]  border-r',
-  rating: 'w-[128px]  border-r',
-  appliedJob: 'w-[200px]  border-r',
-  resume: 'w-[94px]  border-r',
-  actions: 'w-[52px] ',
+  checkbox: 'w-4 bg-white',
+  name: 'w-30 border-r',
+  email: 'w-30 border-r overflow-hidden bg-white',
+  stage: 'w-10  border-r bg-white',
+  rating: 'w-10  border-r bg-white',
+  appliedJob: 'w-10  border-r bg-white',
+  resume: 'w-4  border-r bg-white',
+  aiFitScore: 'w-10  border-r bg-white',
+  source: 'w-10  border-r bg-white',
+  dateAdded: 'w-10  border-r bg-white',
+  actions: 'w-4 ',
 };

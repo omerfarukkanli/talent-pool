@@ -10,12 +10,12 @@ const initialState: UIState = {
   columnVisibility: {
     name: true,
     stage: true,
-    rating: true,
-    appliedJob: true,
-    resume: true,
     aiFitScore: false,
     source: false,
+    rating: true,
     dateAdded: false,
+    appliedJob: true,
+    resume: true,
   },
   commandBarOpen: false,
 };

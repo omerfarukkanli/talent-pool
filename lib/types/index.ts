@@ -1,12 +1,12 @@
 export interface ColumnVisibility {
   name: boolean;
   stage: boolean;
-  rating: boolean;
-  appliedJob: boolean;
-  resume: boolean;
   aiFitScore: boolean;
   source: boolean;
+  rating: boolean;
   dateAdded: boolean;
+  appliedJob: boolean;
+  resume: boolean;
 }
 
 export interface ApplicantsResponse {
@@ -34,6 +34,8 @@ export interface Applicant {
   lastName: string;
   email: string;
   rating: number;
+  sourceType: string;
+  sourceUpdatedAt: string;
   profilePhotoUrl: string;
   createdAt: string;
   activeApplication: {

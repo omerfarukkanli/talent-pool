@@ -32,6 +32,8 @@ export const GET_CANDIDATES = gql`
         lastName
         email
         rating
+        sourceType
+        sourceUpdatedAt
         profilePhotoUrl
         createdAt
         activeApplication {
