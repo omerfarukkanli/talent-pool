@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Input } from '../ui/input';
 import {
-  AirVent,
   AlignStartHorizontalIcon,
   ArrowUpDown,
   MoreHorizontal,
@@ -13,6 +12,7 @@ import { ColumnVisibilityDropdown } from '../ColumnVisibiliyDropdown';
 import { useAppDispatch } from '@/hooks/use-app';
 import { setSearchQuery } from '@/lib/store/slices/talent-pool-slice';
 import { useDebounce } from '@/hooks/use-debounce';
+import AIButton from '../AIButton';
 
 const TalentPoolEdit = () => {
   const dispatch = useAppDispatch();
@@ -42,9 +42,7 @@ const TalentPoolEdit = () => {
       <Button variant='outline' className='hidden md:flex'>
         <AlignStartHorizontalIcon className='h-4 w-4 mr-2' /> Sheet View
       </Button>
-      <Button variant='outline' className='md:hidden'>
-        <AirVent className='h-4 w-4 mr-2' /> Ask AI
-      </Button>
+      <AIButton />
       <Button variant='link' size='icon'>
         <MoreHorizontal className='h-4 w-4' />
       </Button>

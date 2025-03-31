@@ -14,10 +14,6 @@ import {
   setLoading,
   setError,
 } from '@/lib/store/slices/talent-pool-slice';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import ApplicantCard from '../content/applicant-card';
 import ApplicantTableHeader from './applicant-table-header';
 import ApplicantTableCell from './applicant-table-cell';
 
@@ -44,7 +40,6 @@ const TalentPoolTable = () => {
 
   const [selectedApplicants, setSelectedApplicants] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<HTMLDivElement>(null);
@@ -210,76 +205,11 @@ const TalentPoolTable = () => {
     }
   }, [selectedApplicants, applicants]);
 
-  // Mobile loading state
-  if (
-    isMobile &&
-    storeLoading &&
-    isInitialLoad.current &&
-    applicants.length === 0
-  ) {
-    return (
-      <div className='w-full p-4 flex justify-center'>
-        <Loader2 className='w-8 h-8 animate-spin' />
-      </div>
-    );
-  }
-
   if (storeError) {
     return (
       <div className='p-4 rounded-md bg-red-50 text-red-500 border border-red-200'>
         <p className='font-medium'>Error loading applicants</p>
         <p className='text-sm'>{storeError}</p>
-      </div>
-    );
-  }
-
-  if (isMobile) {
-    return (
-      <div className='w-full border rounded-md overflow-hidden'>
-        <div className='border-b p-3 flex items-center'>
-          <Checkbox
-            checked={selectAll}
-            onCheckedChange={handleSelectAll}
-            className='mr-3'
-          />
-          <span className='font-medium'>Select All</span>
-          <span className='ml-auto text-sm text-muted-foreground'>
-            {applicants.length} applicants
-          </span>
-        </div>
-        <div
-          ref={tableContainerRef}
-          className='p-3 max-h-[600px] overflow-auto'
-        >
-          {applicants.length === 0 && !storeLoading ? (
-            <div className='text-center py-8 text-muted-foreground'>
-              No applicants found
-            </div>
-          ) : (
-            applicants.map((applicant) => (
-              <ApplicantCard
-                key={applicant.id}
-                applicant={applicant}
-                isSelected={selectedApplicants.includes(applicant.id)}
-                onSelect={(checked) =>
-                  handleSelectApplicant(applicant.id, checked as boolean)
-                }
-              />
-            ))
-          )}
-          {storeLoading && !isInitialLoad.current && (
-            <div className='flex justify-center py-4'>
-              <Loader2 className='w-6 h-6 animate-spin' />
-            </div>
-          )}
-          <div ref={observerRef} className='h-1 w-full' aria-hidden='true' />
-        </div>
-        <div className='py-3 px-4 border-t'>
-          <Button variant='ghost' size='sm' className='text-primary p-0 h-auto'>
-            <Plus className='mr-1 h-4 w-4' />
-            Add Talent
-          </Button>
-        </div>
       </div>
     );
   }
