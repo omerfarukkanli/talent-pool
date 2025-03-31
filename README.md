@@ -49,3 +49,5 @@ To optimize performance, **useMemo** and **useCallback** hooks were used to mini
 - **Sorting functionality** was implemented for most applicable fields.
 
 This project is designed to create an AI-powered talent pool management system. Future versions will include additional features and improvements.
+
+url: talent-pool-alpha.vercel.app
